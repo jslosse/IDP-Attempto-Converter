@@ -79,5 +79,3 @@ returns
 ((! a[Area] :! b[Colour] :! c[Area] :((Coloured(a)=b) & Border(a, c))=>(~((Coloured(c)=b))))).
 ```
 
-© Jef Slosse
-
