@@ -1,16 +1,26 @@
 # IDP-Attempto-Converter
-This document explains how the IDP-Attempto converter can be used.
 ## Requirements
 * The ACE Editor can be installed from https://github.com/AceWiki/AceWiki.
 * A web-IDE of the IDP system is available at http://verne.cs.kuleuven.be/idp/, for offline use, IDP can be installed from https://dtai.cs.kuleuven.be/software/idp.
 ## Introduction
-- The aim is to facilitate the use of IDP for domain-experts who are not experienced with FO(.).
-- We allow domain-experts to express the knowledge about a problem in Attempto Controlled English.  
-- The user annotates an IDP vocabulary, according to the annotation rules, that our program converts to an ACE lexicon.
+- The aim is to facilitate the use of IDP for domain-experts who are not experienced with FO(.), therfore, we allow domain-experts to express the knowledge about a problem in Attempto Controlled English (ACE).  
+- The user annotates an IDP vocabulary, according to the annotation rules, our program converts this to an ACE lexicon.
 - With this lexicon, the user can express knowledge in ACE sentences with the assistance of the predictive ACE editor.
 - These sentences are then parsed to discourse representation structures (DRS) by the Attempto Parsing Engine (APE), integrated in the ACE editor.
 - These DRS can be converted to IDP theory by our program.
 
+## Annotation rules
+Annotations always start with //
+* `types` are annotateded with a noun, the structure is  `//singular_form_noun, plural_form_noun`
+* `constructed types`are annotated with a noun, followed by the genders in braces (masc, fem,neut): `//singular_form_noun,plural_form_noun,{gender_constructor_1,gender_constructor2,...}`
+* `functions` and `relations` can be annotated with adjecives or verbs according to the user's preference.
+  * Verb annotation 
+      * unary `//verb,inf_form_verb,third_person_singular_verb` note that `verb` is a keyword, e.g. `//verb,change,changes`
+     * binary `//verb,inf_form_verb,third_person_singular_verb,past_part_verb` note that `verb` is a keyword, e.g. `//verb,give,gives,given`
+  * Adjective annotation
+     * regular adjectives `//adj,positive_form`, e.g. `//adj,important`
+     * irregular adjectives `//adj,positive_form,comparative_form,superlative_form`, e.g `//adj,happy,happier,happiest`
+     
 ## Commands
 ### Generating an ACE Lexicon from an annotated IDP vocabulary
 In the python command-line, to generate an ACE lexicon the user can type:
@@ -28,19 +38,6 @@ translation = main_converter.translate(drs_output_ace_editor, mapping, function_
 ```
 - translation : The translation to IDP theory.
 
-
-
-## Annotation rules
-Annotations always start with //
-* `types` are annotateded with a noun, the structure is  `//singular_form_noun, plural_form_noun`
-* `constructed types`are annotated with a noun, followed by the genders in braces (masc, fem,neut): `//singular_form_noun,plural_form_noun,{gender_constructor_1,gender_constructor2,...}`
-* `functions` and `relations` can be annotated with adjecives or verbs according to the user's preference.
-  * Verb annotation 
-      * unary `//verb,inf_form_verb,third_person_singular_verb` note that `verb` is a keyword, e.g. `//verb,change,changes`
-     * binar `//verb,inf_form_verb,third_person_singular_verb,past_part_verb` note that `verb` is a keyword, e.g. `//verb,give,gives,given`
-  * Adjective annotation
-     * regular adjectives `//adj,positive_form`, e.g. `//adj,important`
-     * irregular adjectives `//adj,positive_form,comparative_form,superlative_form`, e.g `//adj,happy,happier,happiest`
  
 ## Example
    We illustrate the annotations and commands with the map colouring problem:
@@ -82,5 +79,5 @@ returns
 ((! a[Area] :! b[Colour] :! c[Area] :((Coloured(a)=b) & Border(a, c))=>(~((Coloured(c)=b))))).
 ```
 
-
+© Jef Slosse
 
