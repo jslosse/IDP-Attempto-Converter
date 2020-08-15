@@ -27,7 +27,7 @@ To convert DRS to IDP theory the user can type:
 ```
 translation = main_converter.translate(drs_output_ace_editor, mapping, function_dummy)
 ```
-- translated : The translation to IDP theory.
+- translation : The translation to IDP theory.
 
 
 
