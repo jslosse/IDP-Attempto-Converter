@@ -50,7 +50,7 @@ annotated_voc_mc = """
 type Area//area,areas
 type Colour//colour,colours
 Border(Area,Area)//verb,border,borders,bordered
-Coloured(Area):Color//adj,coloured-with)"""
+Coloured(Area):Color//adj,coloured-with"""
 lexicon, mapping, function_dummy = main_converter.get_lexicon_and_mapping(annotated_voc_mc)
 print(lexicon)
 print(mapping)
