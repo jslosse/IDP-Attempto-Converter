@@ -46,11 +46,12 @@ Annotations always start with //
 ## Example
    We illustrate the annotations and commands with the map colouring problem:
 ```
+import main_converter
 annotated_voc_mc = """
 type Area//area,areas
 type Colour//colour,colours
-Border(Country,Country)//verb,border,borders,bordered
-Coloured(Country):Color//adj,coloured-with)"""`
+Border(Area,Area)//verb,border,borders,bordered
+Coloured(Area):Color//adj,coloured-with)"""
 lexicon, mapping, function_dummy = main_converter.get_lexicon_and_mapping(annotated_voc_mc)
 print(lexicon)
 print(mapping)
