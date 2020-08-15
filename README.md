@@ -3,7 +3,7 @@
 * The ACE Editor can be installed from https://github.com/AceWiki/AceWiki.
 * A web-IDE of the IDP system is available at http://verne.cs.kuleuven.be/idp/, for offline use, IDP can be installed from https://dtai.cs.kuleuven.be/software/idp.
 ## Introduction
-- The aim is to facilitate the use of IDP for domain-experts who are not experienced with FO(.), therfore, we allow domain-experts to express the knowledge about a problem in Attempto Controlled English (ACE).  
+- The aim is to facilitate the use of IDP for domain-experts who are not experienced with FO(.). To achieve this, we allow domain-experts to express the knowledge about a problem in Attempto Controlled English (ACE).  
 - The user annotates an IDP vocabulary, according to the annotation rules, our program converts this to an ACE lexicon.
 - With this lexicon, the user can express knowledge in ACE sentences with the assistance of the predictive ACE editor.
 - These sentences are then parsed to discourse representation structures (DRS) by the Attempto Parsing Engine (APE), integrated in the ACE editor.
