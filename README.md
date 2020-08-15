@@ -15,7 +15,6 @@ This document explains how the IDP-Attempto converter can be used.
 ### Generating an ACE Lexicon from an annotated IDP vocabulary
 In the python command-line, to generate an ACE lexicon the user can type:
 ```
-import main_converter
 lexicon, mapping, function_dummy = main_converter.get_lexicon_and_mapping(annotated_IDP_vocabulary)
 ```
 - lexicon :  The generated lexicon that can be used in the ACE Editor.
