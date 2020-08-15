@@ -4,6 +4,7 @@ import re
 lexicon = []
 # list that links the IDP voc to the corresponding Attempto words
 link_IDP_Attempto = []
+# function dummy
 functions_IDP = []
 
 
@@ -125,7 +126,8 @@ def generate_adjectives(idp_voc):
         add_to_dictionary_function_true(i)
         generate_adjectives_entries(i)
 
-#clears the lexicon and the dictionaries and calls the other methods to generate the output
+#clears lexicon, function dummies and links
+# calls the other methods to generate the output
 def generate_lexicon(idp_voc):
     lexicon.clear()
     link_IDP_Attempto.clear()
