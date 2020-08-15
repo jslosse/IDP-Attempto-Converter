@@ -2,13 +2,13 @@ from pyparsing import (Suppress, Word, Group, delimitedList, sglQuotedString, al
                        ParseResults)
 import re
 import lexicon_generator
-
+# predefined variable list
 variables = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
              'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 link_IDP_Attempto = {}
 functions_IDP = {}
 
-
+# classes for the different DRS predicates with a class specific translation method
 class Property:
     def __init__(self, ref, predicate, fixed):
         self.ref = ref
@@ -23,7 +23,8 @@ class PropertyTrans(Property):
     def __init__(self, ref, predicate, fixed, open):
         super().__init__(ref, predicate, fixed)
         self.open = open
-
+        
+# different translation method if the noun corresponds to a function in IDP
     def to_string(self, arg):
         if functions_IDP[self.predicate]:
             return "({0}({1})={2})".format(lexicon_to_voc(self.predicate), arg, self.open.to_string())
@@ -45,13 +46,15 @@ class Object:
 
     def to_string(self):
         return self.var
-
+      
+# for quantification
     def to_string2(self):
         if self.noun == 'something':
             return "{0}".format(self.var)
         else:
             return "{0}[{1}] ".format(self.var, lexicon_to_voc(self.noun))
-
+          
+# for sentences like Bill is a person -> Person(Bill)
     def to_string3(self, arg):
         return "{0}({1})".format(lexicon_to_voc(self.noun), arg)
 
@@ -71,7 +74,7 @@ class PropertyPredicate:
         self.noun = noun
         self.obj = obj
         self.subj = subj
-
+        
     def to_string(self):
         if isinstance(self.subj, Object):
             return self.subj.to_string3(self.obj.to_string())
@@ -80,7 +83,6 @@ class PropertyPredicate:
 
 
 class Predicate:
-    # upgrade for unary predicates necessary
     def __init__(self, ref, predicate, subjref):
         self.ref = ref
         self.predicate = predicate
@@ -103,12 +105,12 @@ class PredicateTrans(Predicate):
             return "{0}({1}, {2})".format(lexicon_to_voc(self.predicate), self.subjref.to_string(),
                                           self.objref.to_string())
 
-
+          
+# get corresponding IDP words
 def lexicon_to_voc(s):
-    # link words
     return link_IDP_Attempto[s]
 
-
+# grammar to parse the string
 # punctuation and basic elements
 LPAR, RPAR, LSQB, RSQB, COMMA = map(Suppress, "()[],")
 
@@ -178,16 +180,19 @@ condition_expr << (
         object_expr | property_predicate_expr | predicate_predicate_expr | negation_drs_expr | if_then_drs_expr | disjunction_drs_expr)
 
 
+# remove redundant digits from the drs output
 def sampelize(string):
     pattern = re.compile(r'\-\d\/\d+')
     return re.sub(pattern, '', string)
 
-
+# stores objects
 dict = {}
+#stores universal quantified objects
 universal = {}
 voc = []
 
 
+# create objects from predicates and add them to dict
 def doorzoek_lijst(l, in_if=False):
     if type(l) is list:
         if l[0] == 'drs':
@@ -233,7 +238,7 @@ def doorzoek_lijst(l, in_if=False):
                     for i in range(1, len(x)):
                         doorzoek_lijst(x[i])
 
-
+# translates the drs
 def to_string(l):
     str_translation = []
     if type(l) is list:
@@ -276,18 +281,18 @@ def to_string(l):
             str_translation.append(dict[l[1]].to_string())
         return ''.join(str_translation)
 
-
+# resets the variables when a new drs is entered
 def variable_reset():
     variables.clear()
     variables.extend(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                      'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'])
 
-
+# cleans up redundant parentheses
 def string_cleanup(s):
     pattern = re.compile(r'\(\)\=\>')
     return re.sub(pattern, '', s)
 
-
+# add links and function dummies
 def add_to_dict(list):
     link_IDP_Attempto.clear()
     functions_IDP.clear()
@@ -296,12 +301,12 @@ def add_to_dict(list):
     for j in list[1]:
         functions_IDP[j[0]] = j[1]
 
-
+# returns lexicon, mapping and function_dummt
 def get_lexicon_and_mapping(input_lexicon):
     output_generator = lexicon_generator.generate_lexicon(input_lexicon)
     return output_generator[0], output_generator[1], output_generator[2]
 
-
+# main method that returns the translation
 def translate(drs_input, mapping, function_dummy):
     add_to_dict([mapping, function_dummy])
     parsed = drs_expr.parseString(sampelize(drs_input)).asList()
