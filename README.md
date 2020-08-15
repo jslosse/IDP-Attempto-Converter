@@ -23,7 +23,7 @@ lexicon, mapping, function_dummy = main_converter.get_lexicon_and_mapping(annota
 - function_dummy:  Wheter the words in the lexicon correspond to a function in the IDP vocabulary. 
 
 ### Converting DRS to IDP theory
-To convert generated DRS to IDP the user can type:
+To convert DRS to IDP theory the user can type:
 ```
 translation = main_converter.translate(drs_output_ace_editor, mapping, function_dummy)
 ```
