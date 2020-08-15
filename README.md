@@ -40,7 +40,7 @@ Annotations always start with //
       * unary `//verb,inf_form_verb,third_person_singular_verb` note that `verb` is a keyword, e.g. `//verb,change,changes`
      * binar `//verb,inf_form_verb,third_person_singular_verb,past_part_verb` note that `verb` is a keyword, e.g. `//verb,give,gives,given`
   * Adjective annotation
-     * regular adjectives `//adj,positive_form`, e.g. `//adj,important
+     * regular adjectives `//adj,positive_form`, e.g. `//adj,important`
      * irregular adjectives `//adj,positive_form,comparative_form,superlative_form`, e.g `//adj,happy,happier,happiest`
  
 ## Example
