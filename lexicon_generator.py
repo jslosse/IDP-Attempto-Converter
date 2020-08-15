@@ -7,7 +7,7 @@ link_IDP_Attempto = []
 functions_IDP = []
 
 
-# read types from annotated IDP voc and transform to nouns in Attempto + links
+# read types from annotated IDP voc and transform to nouns in Attempto
 def generate_types(idp_voc):
     pattern_type = re.compile(r'(type)\s?([A-Za-z]+)//([A-Za-z]+),\s?([A-Za-z]+)')
     matches = pattern_type.finditer(idp_voc)
@@ -17,7 +17,7 @@ def generate_types(idp_voc):
         lexicon.append("noun_sg({0},{0},neutr).\nnoun_pl({1},{0},neutr).\n".format(i[3], i[4]))
 
 
-# Read constructed types and generate proper names and nouns + links
+# Read constructed types and generate proper names and nouns
 def generate_constructor_types(idp_voc):
     pattern_constr_type = re.compile(
         r'(type)\s?([A-Za-z]*.+\)?) constructed from \{([^}]*)}\s?//\s?([A-Za-z]+),\s?([A-Za-z]+),\s?\{([^}]*)}')
@@ -32,6 +32,7 @@ def generate_constructor_types(idp_voc):
             lexicon.append("pn_sg('{0}','{0}',{1}).\n".format(constructed[j], genders[j]))
 
 
+#adds function to the dictionaries and sets function_dummy true, also adds quotation marks if the word is hyphenated (required by ACE)
 def add_to_dictionary_function_true(annotated_function):
     if '-' in annotated_function[4]:
         link_IDP_Attempto.append(("'{0}'".format(annotated_function[4]), annotated_function[1]))
@@ -40,7 +41,7 @@ def add_to_dictionary_function_true(annotated_function):
         link_IDP_Attempto.append((annotated_function[4], annotated_function[1]))
         functions_IDP.append((annotated_function[4], True))
 
-
+#adds relations to the dictionaries
 def add_to_dictionary_function_false(annotated_relation):
     if '-' in annotated_relation[4]:
         link_IDP_Attempto.append(("'{0}'".format(annotated_relation[4]), annotated_relation[1]))
@@ -50,7 +51,7 @@ def add_to_dictionary_function_false(annotated_relation):
         functions_IDP.append((annotated_relation[4], False))
 
 
-# Read annotations with verbs from relations and functions
+# adds the verb entries to the lexicon
 def generate_verb_entries(annotations):
     if annotations[6]:
         if '-' in annotations[4]:
@@ -68,7 +69,7 @@ def generate_verb_entries(annotations):
         else:
             lexicon.append("iv_finsg({1},{0}).\niv_infpl({0},{0}).\n".format(annotations[4], annotations[5]))
 
-
+# detects verb entries
 def generate_verbs(idp_voc):
     pattern_verb_relation = re.compile(
         r'([a-zA-Z]+)\(+([a-zA-Z]+),*([a-zA-Z]*)\)\s?//\s?verb,\s?(\'?[a-z]+-?[a-z]*\'?),?\s?(\'?[a-z]+-?[a-z]*\'?)?,?\s?(\'?[a-z]+-?[a-z]*\'?)?')
@@ -85,7 +86,7 @@ def generate_verbs(idp_voc):
         add_to_dictionary_function_true(i)
         generate_verb_entries(i)
 
-
+#adds adjectives to the lexicon
 def generate_adjectives_entries(annotations):
     if annotations[3]:
         a = annotations[4].split('-')
@@ -107,7 +108,7 @@ def generate_adjectives_entries(annotations):
         else:
             lexicon.append("adj_itr({0},{0}).\n".format(annotations[4]))
 
-
+#detects adjective entries
 def generate_adjectives(idp_voc):
     pattern_adjectives_relation = re.compile(
         r'([a-zA-Z]+)\s?\(+([a-zA-Z]+),?\s?([a-zA-Z]*)\)\s?//\s?adj,\s?(\'?[a-z]+-?[a-z]*\'?),?\s?(\'?[a-z]+-?['
@@ -124,7 +125,7 @@ def generate_adjectives(idp_voc):
         add_to_dictionary_function_true(i)
         generate_adjectives_entries(i)
 
-
+#clears the lexicon and the dictionaries and calls the other methods to generate the output
 def generate_lexicon(idp_voc):
     lexicon.clear()
     link_IDP_Attempto.clear()
