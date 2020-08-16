@@ -68,7 +68,7 @@ We express in the ACE editor that adjacent countries can not have the same colou
 `if an area X is coloured-with a colour Z and borders an area Y then Y is not coloured-with Z.`
 Note that the border relation has to be defined for both areas (Border(Belgium,Germany) and Border(Germany,Belgium))
 
-The ACE editor parses this to DRS that we set equal to drs_output:
+The ACE editor parses this to DRS that we set equal to drs_output, our program converts this to IDP theory:
 ```
 drs_output = "drs([],[=>(drs([A,B,C,D,E,F],[object(A,area,countable,na,eq,1),object(B,colour,countable,na,eq,1),property(C,'coloured-with',pos,B),predicate(D,be,A,C),object(E,area,countable,na,eq,1),predicate(F,border,A,E)]),drs([],[-(drs([G,H],[property(G,'coloured-with',pos,B),predicate(H,be,E,G)]))]))])"
 translation = main_converter.translate(drs_output, mapping, function_dummy)
